@@ -29,7 +29,13 @@ public class DanhSachPhongBan implements Ichucnang<PhongBan> {
 ////////////////////////Thêm////////////////////////
     @Override
     public void them(PhongBan pb) {
-        dspb.add(pb);
+        for (PhongBan existingPB : dspb) {
+            if (existingPB.getMaPB().equals(pb.getMaPB())) {
+                System.out.println("Mã số phòng ban đã tồn tại! Vui lòng nhập mã khác.");
+                return; // Dừng phương thức nếu phát hiện mã trùng
+            }
+        }
+        dspb.add(pb); // Chỉ thêm sau khi đã kiểm tra toàn bộ danh sách
         System.out.println("Đã thêm phòng ban mới.");
     }
 
@@ -69,26 +75,30 @@ public class DanhSachPhongBan implements Ichucnang<PhongBan> {
                     switch (choice) {
                         case 1:
                             System.out.print("Nhập mã phòng ban mới: ");
-                            String newMaPB = scanner.nextLine().trim().toUpperCase();;
+                            String newMaPB = scanner.nextLine().trim().toUpperCase();
+                            ;
                             validateMAPB(newMaPB);
                             pb.setMaPB(newMaPB);
                             System.out.println("Đã cập nhật mã phòng ban.");
                             break;
                         case 2:
                             System.out.print("Nhập tên phòng ban mới: ");
-                            String newTenPB = scanner.nextLine().trim().toUpperCase();;
+                            String newTenPB = scanner.nextLine().trim().toUpperCase();
+                            ;
                             validateTenPB(newTenPB);
                             pb.setTenPB(newTenPB);
                             System.out.println("Đã cập nhật tên phòng ban.");
                             break;
                         case 3:
                             System.out.print("Nhập mã phòng ban mới: ");
-                            newMaPB = scanner.nextLine().trim().toUpperCase();;
+                            newMaPB = scanner.nextLine().trim().toUpperCase();
+                            ;
                             validateMAPB(newMaPB);
                             pb.setMaPB(newMaPB);
 
                             System.out.print("Nhập tên phòng ban mới: ");
-                            newTenPB = scanner.nextLine().trim().toUpperCase();;
+                            newTenPB = scanner.nextLine().trim().toUpperCase();
+                            ;
                             validateTenPB(newTenPB);
                             pb.setTenPB(newTenPB);
 
@@ -139,7 +149,14 @@ public class DanhSachPhongBan implements Ichucnang<PhongBan> {
         return null;  // Không tìm thấy phòng ban
     }
 
-    
+    public PhongBan timPhongBanCuaNhanVien(String maNV) {
+        for (PhongBan pb : dspb) {
+            if (pb.kiemTraNhanVien(maNV)) {
+                return pb; // Trả về phòng ban mà nhân viên đang thuộc
+            }
+        }
+        return null; // Không tìm thấy nhân viên trong bất kỳ phòng ban nào
+    }
 
 ////////////////////////Hiển Thị////////////////////////
     public void hienThi() {
@@ -151,13 +168,10 @@ public class DanhSachPhongBan implements Ichucnang<PhongBan> {
         for (PhongBan pb : dspb) {
             pb.hienThiThongTin();
         }
+        System.out.println("Tổng số lượng phòng ban: " + PhongBan.getSoLuongPhongBan());
     }
+//////////////////////Validate////////////////////////////
 
-//    public void hienThiDanhSachPhongBan() {
-//        for (PhongBan pb : dspb) {
-//            pb.hienThiDanhSachNhanVien();
-//        }
-//    }
     private static void validateTenPB(String tenPB) {
         if (tenPB.isEmpty()) {
             throw new IllegalArgumentException("Tên phòng ban không được để trống.");

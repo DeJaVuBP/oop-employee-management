@@ -65,7 +65,7 @@ public class Menu {
                                     System.out.println("1. Trưởng phòng");
                                     System.out.println("2. FullTime");
                                     System.out.println("3. PartTime");
-                                    System.out.println("0. Quay Lại");
+//							System.out.println("0. Quay Lại");
                                     System.out.println("----- ----- -----");
                                     System.out.print("Chọn chức năng: ");
                                     loaiNV = scanner.nextInt();
@@ -212,8 +212,8 @@ public class Menu {
                                             }
                                         }
 
-                                        FullTime fullTime = new FullTime(MSNV, ten, email, diachi, ngaysinh, gioitinh,
-                                                sdt, luongCoBan, phuCap);
+                                        FullTime fullTime = new FullTime(MSNV, ten, email, diachi, ngaysinh, gioitinh, sdt,
+                                                luongCoBan, phuCap);
                                         danhSach.them(fullTime);
                                         break;
 
@@ -226,8 +226,8 @@ public class Menu {
                                                 luongTheoGio = scanner.nextDouble();
                                                 validateSoLuongTheoGio(luongTheoGio);
                                                 scanner.nextLine();
-                                                PartTime partTime = new PartTime(MSNV, ten, email, diachi,
-                                                        ngaysinh, gioitinh, sdt, luongTheoGio);
+                                                PartTime partTime = new PartTime(MSNV, ten, email, diachi, ngaysinh, gioitinh, sdt,
+                                                        luongTheoGio);
 
                                                 danhSach.them(partTime);
                                                 break;
@@ -274,10 +274,10 @@ public class Menu {
                                 } else {
                                     // Đọc danh sách phòng ban từ file và thêm vào DanhSachPB
                                     List<NhanVien> nhanvien = nhapTuFile.docDanhSachNhanVienTuFile(tenFileDoc);
-                                for (NhanVien nv : nhanvien) {
-                                    danhSach.them(nv);
-                                }
-                                    System.out.println("Đã nhập danh sách phòng ban từ file.");
+                                    for (NhanVien nv : nhanvien) {
+                                        danhSach.them(nv);
+                                    }
+                                    System.out.println("Đã nhập danh sách nhân viên từ file.");
                                 }
 //                               
                                 break;
@@ -333,7 +333,7 @@ public class Menu {
                             case 2:
                                 System.out.print("Nhập mã phòng ban cần xóa: ");
                                 String maXoa = scanner.nextLine().trim().toUpperCase();
-                                ;
+
                                 dspb.xoa(maXoa); // Xóa phòng ban
                                 break;
                             case 3:
@@ -348,6 +348,7 @@ public class Menu {
                                 break;
                             case 5:
                                 dspb.hienThi(); // Hiển thị danh sách phòng ban
+
                                 break;
                             case 6:
                                 System.out.print("Nhập tên file để đọc danh sách: ");
@@ -376,18 +377,26 @@ public class Menu {
                             case 8:
                                 System.out.print("Nhập mã nhân viên cần thêm: ");
                                 String maNV = scanner.nextLine().trim().toUpperCase();
-                                NhanVien nhanVienThem = danhSach.timNhanVien(maNV); // Tìm nhân viên trong các phòng ban
+                                NhanVien nhanVienThem = danhSach.timNhanVien(maNV); // Tìm nhân viên trong danh sách nhân viên chung
 
                                 if (nhanVienThem != null) {
-                                    System.out.print("Nhập mã phòng ban để thêm nhân viên vào: ");
-                                    String maPB = scanner.nextLine().trim().toUpperCase();
-                                    PhongBan phongBanThem = dspb.timKiemPhongBan(maPB);
+                                    // Kiểm tra nhân viên đã thuộc phòng ban nào chưa
+                                    PhongBan phongBanHienTai = dspb.timPhongBanCuaNhanVien(maNV);
 
-                                    if (phongBanThem != null) {
-                                        phongBanThem.themNhanVien(nhanVienThem);
-                                        System.out.println("Đã thêm nhân viên " + nhanVienThem.getTen() + " vào phòng ban " + phongBanThem.getTenPB());
+                                    if (phongBanHienTai != null) {
+                                        System.out.println("Nhân viên đã thuộc phòng ban: " + phongBanHienTai.getTenPB());
                                     } else {
-                                        System.out.println("Phòng ban không tồn tại.");
+                                        System.out.print("Nhập mã phòng ban để thêm nhân viên vào: ");
+                                        String maPB = scanner.nextLine().trim().toUpperCase();
+                                        PhongBan phongBanThem = dspb.timKiemPhongBan(maPB); // Tìm phòng ban
+
+                                        if (phongBanThem != null) {
+                                            phongBanThem.themNhanVien(nhanVienThem); // Thêm nhân viên vào phòng ban
+                                            System.out.println("Đã thêm nhân viên " + nhanVienThem.getTen() + " vào phòng ban "
+                                                    + phongBanThem.getTenPB());
+                                        } else {
+                                            System.out.println("Phòng ban không tồn tại.");
+                                        }
                                     }
                                 } else {
                                     System.out.println("Không tìm thấy nhân viên với mã: " + maNV);
@@ -395,6 +404,31 @@ public class Menu {
                                 break;
 
                             case 9:
+                                // Tìm nhân viên trong danh sách phòng ban
+                                System.out.print("Nhập mã phòng ban cần xóa nhân viên: ");
+                                String maPBXoa = scanner.nextLine().trim().toUpperCase();
+                                PhongBan PBXoa = dspb.timKiemPhongBan(maPBXoa);
+                                if (maPBXoa != null) {
+                                    // Tìm dự án trong danh sách dự án
+                                    System.out.print("Nhập mã nhân viên cần xóa: ");
+                                    String maNVXoa = scanner.nextLine().trim().toUpperCase();
+                                    NhanVien nhanVienXoa = danhSach.timNhanVien(maNVXoa);
+                                    if (maNVXoa != null) {
+                                        boolean pbXoa = PBXoa.xoaNhanVien(nhanVienXoa); // Xóa nhân viên khỏi dự án
+                                        if (pbXoa) {
+                                            System.out.println("Đã xóa nhân viên " + nhanVienXoa.getTen() + " khỏi phòng ban "
+                                                    + PBXoa.getTenPB());
+                                        } else {
+                                            System.out.println("Nhân viên " + nhanVienXoa.getTen() + " không thuộc phòng ban "
+                                                    + PBXoa.getTenPB());
+                                        }
+                                    } else {
+                                        System.out.println("Không tìm thấy nhân viên với mã: " + maNVXoa);
+                                    }
+                                } else {
+                                    System.out.println("Dự án không tồn tại.");
+                                }
+                                break;
 
                             case 10:
                                 System.out.print("Nhập mã phòng ban để xem danh sách nhân viên: ");
@@ -497,15 +531,23 @@ public class Menu {
                                 NhanVien nhanVienThem = danhSach.timNhanVien(maNV); // Tìm nhân viên trong các phòng ban
 
                                 if (nhanVienThem != null) {
-                                    System.out.print("Nhập mã dự án để thêm nhân viên vào: ");
-                                    String maDA = scanner.nextLine().trim().toUpperCase();
-                                    DuAn duAnThem = dsda.timKiemDuAn(maDA);
+                                    // Kiểm tra nhân viên đã thuộc phòng ban nào chưa
+                                    DuAn duAnHienTai = dsda.timDuAnCuaNhanVien(maNV);
 
-                                    if (duAnThem != null) {
-                                        duAnThem.themNhanVien(nhanVienThem);
-                                        System.out.println("Đã thêm nhân viên " + nhanVienThem.getTen() + " vào dự án " + duAnThem.getTenDA());
+                                    if (duAnHienTai != null) {
+                                        System.out.println("Nhân viên đã thuộc dự án: " + duAnHienTai.getTenDA());
                                     } else {
-                                        System.out.println("Dự án không tồn tại.");
+                                        System.out.print("Nhập mã dự án để thêm nhân viên vào: ");
+                                        String maDA = scanner.nextLine().trim().toUpperCase();
+                                        DuAn duAnThem = dsda.timKiemDuAn(maDA); // Tìm phòng ban
+
+                                        if (duAnThem != null) {
+                                            duAnThem.themNhanVien(nhanVienThem); // Thêm nhân viên vào phòng ban
+                                            System.out.println("Đã thêm nhân viên " + nhanVienThem.getTen() + " vào dự án "
+                                                    + duAnThem.getTenDA());
+                                        } else {
+                                            System.out.println("Dự án không tồn tại.");
+                                        }
                                     }
                                 } else {
                                     System.out.println("Không tìm thấy nhân viên với mã: " + maNV);
@@ -513,6 +555,33 @@ public class Menu {
                                 break;
 
                             case 9:
+                                System.out.print("Nhập mã dự án cần xóa nhân viên: ");
+                                String maDAXoa = scanner.nextLine().trim().toUpperCase();
+                                DuAn duAnXoa = dsda.timKiemDuAn(maDAXoa); // Tìm dự án trong danh sách dự án
+
+                                if (maDAXoa != null) {
+
+                                    System.out.print("Nhập mã nhân viên cần xóa: ");
+                                    String maNVXoa = scanner.nextLine().trim().toUpperCase();
+                                    NhanVien nhanVienXoa = danhSach.timNhanVien(maNVXoa); // Tìm nhân viên trong danh sách phòng
+                                    // ban
+                                    if (maNVXoa != null) {
+                                        boolean daXoa = duAnXoa.xoaNhanVien(nhanVienXoa); // Xóa nhân viên khỏi dự án
+                                        if (daXoa) {
+                                            System.out.println("Đã xóa nhân viên " + nhanVienXoa.getTen() + " khỏi dự án "
+                                                    + duAnXoa.getTenDA());
+                                        } else {
+                                            System.out.println("Nhân viên " + nhanVienXoa.getTen() + " không thuộc dự án "
+                                                    + duAnXoa.getTenDA());
+                                        }
+                                    } else {
+                                        System.out.println("Không tìm thấy nhân viên với mã: " + maNVXoa);
+                                    }
+                                } else {
+                                    System.out.println("Dự án không tồn tại.");
+
+                                }
+                                break;
 
                             case 10:
                                 System.out.print("Nhập mã dự án để xem danh sách nhân viên: ");
@@ -522,7 +591,7 @@ public class Menu {
                                 if (duAnHienThi != null) {
                                     duAnHienThi.hienThiDanhSachNhanVien();
                                 } else {
-                                    System.out.println("Không tìm thấy phòng ban với mã: " + maDAHienThi);
+                                    System.out.println("Không tìm thấy dự án với mã: " + maDAHienThi);
                                 }
                                 break;
                             case 0:
@@ -544,11 +613,8 @@ public class Menu {
                         System.out.println("2. Xóa bảng lương");
                         System.out.println("3. Sửa thông tin dự án");
                         System.out.println("4. Tìm kiếm bảng lương");
-                        System.out.println("5. Hiển thị danh sách bảng ");
-//                        System.out.println("6. Đọc danh sách dự án từ file");
-//                        System.out.println("7. Ghi danh sách dự án vào file");
-//                        System.out.println("8. Thêm nhân viên vào dự án");
-//                        System.out.println("9. Hiển thị nhân viên của dự án");
+                        System.out.println("5. Hiển thị danh sách bảng lương ");
+                        System.out.println("6. Ghi danh sách bảng lương vào file ");
                         System.out.println("0. Thoát");
                         System.out.println("----- ----- ----- ----- ------");
                         System.out.print("Chọn chức năng: ");
@@ -610,13 +676,95 @@ public class Menu {
                                 break;
 
                             case 2:
+                                System.out.println("Xóa bảng lương:");
+                                System.out.print("Nhập mã nhân viên để xóa bảng lương: ");
+                                String maNVXoa = scanner.nextLine().trim().toUpperCase();
+
+                                System.out.print("Nhập tháng cần xóa: ");
+                                int thangXoa = scanner.nextInt();
+                                scanner.nextLine(); // Đọc bỏ dòng còn lại
+
+                                dstl.xoa(maNVXoa, thangXoa);
+                                break;
 
                             case 3:
+                                System.out.println("Sửa thông tin bảng lương:");
+                                System.out.print("Nhập mã nhân viên cần sửa bảng lương: ");
+                                String maNVSua = scanner.nextLine().trim().toUpperCase();
+
+                                System.out.print("Nhập tháng cần sửa: ");
+                                int thangSua = scanner.nextInt();
+                                scanner.nextLine(); // Đọc bỏ dòng còn lại
+
+                                // Tìm kiếm bảng lương
+                                TinhLuong bangLuong = dstl.timKiem(maNVSua, thangSua);
+                                if (bangLuong == null) {
+                                    System.out.println("Không tìm thấy bảng lương cần sửa.");
+                                    break;
+                                }
+
+                                // Hiển thị thông tin bảng lương hiện tại
+                                System.out.println("Thông tin bảng lương hiện tại: " + bangLuong);
+
+                                // Sửa thông tin tùy thuộc vào loại nhân viên và tính lại tổng lương
+                                if (bangLuong.getNhanVien() instanceof FullTime) {
+                                    System.out.print("Nhập số ngày làm mới: ");
+                                    int soNgayLamMoi = scanner.nextInt();
+                                    scanner.nextLine(); // Đọc bỏ dòng còn lại
+                                    bangLuong.setSoNgayLam(soNgayLamMoi); // Cập nhật số ngày làm và tính lại lương
+                                } else if (bangLuong.getNhanVien() instanceof PartTime) {
+                                    System.out.print("Nhập số giờ làm mới: ");
+                                    int soGioLamMoi = scanner.nextInt();
+                                    scanner.nextLine(); // Đọc bỏ dòng còn lại
+                                    bangLuong.setSoGioLam(soGioLamMoi); // Cập nhật số giờ làm và tính lại lương
+                                } else if (bangLuong.getNhanVien() instanceof TruongPhong) {
+                                    System.out.print("Nhập số ngày làm mới: ");
+                                    int soNgayLamMoi = scanner.nextInt();
+                                    System.out.print("Nhập hệ số lương mới: ");
+                                    double heSoLuongMoi = scanner.nextDouble();
+                                    scanner.nextLine(); // Đọc bỏ dòng còn lại
+                                    bangLuong.setSoNgayLam(soNgayLamMoi); // Cập nhật số ngày làm
+                                    bangLuong.setHeSoLuong(heSoLuongMoi); // Cập nhật hệ số lương
+                                }
+
+                                // Cập nhật tổng lương sau khi sửa thông tin
+                                bangLuong.capNhatLuong(); // Tính lại lương
+
+                                System.out.println("Cập nhật bảng lương thành công!");
+                                break;
 
                             case 4:
 
+                                System.out.println("Tìm kiếm bảng lương:");
+                                System.out.print("Nhập mã nhân viên cần tìm: ");
+                                String maNVTim = scanner.nextLine().trim().toUpperCase();
+
+                                System.out.print("Nhập tháng cần tìm: ");
+                                int thangTim = scanner.nextInt();
+                                scanner.nextLine(); // Đọc bỏ dòng còn lại
+
+                                TinhLuong bangLuongTim = dstl.timKiem(maNVTim, thangTim); // Phương thức tìm kiếm bảng lương
+                                if (bangLuongTim != null) {
+                                    System.out.println("Thông tin bảng lương tìm thấy: ");
+                                    System.out.println(bangLuongTim);
+                                } else {
+                                    System.out.println("Không tìm thấy bảng lương.");
+                                }
+                                break;
+
                             case 5:
                                 dstl.hienThi();
+                                break;
+                                
+                            case 6: 
+                                System.out.print("Nhập tên file để lưu danh sách: ");
+                                String tenFileLuu = scanner.nextLine();
+                                if (tenFileLuu.trim().isEmpty()) {
+                                    System.out.println("Tên file không được để trống.");
+                                } else {
+                                    nhapTuFile.xuatDanhSachTinhLuongRaFile(tenFileLuu, dstl.getDanhSachTinhLuong());
+                                    System.out.println("Đã lưu danh sách dự án vào file.");
+                                }
                                 break;
 
                             case 0:
@@ -638,7 +786,8 @@ public class Menu {
 
     public boolean validateNhanVienTrongPhongBan(PhongBan phongBan, NhanVien nhanVien) {
         if (phongBan.getDanhSachNhanVien().contains(nhanVien)) {
-            System.out.println("Nhân viên " + nhanVien.getTen() + " đã tồn tại trong phòng ban " + phongBan.getTenPB() + ".");
+            System.out.println(
+                    "Nhân viên " + nhanVien.getTen() + " đã tồn tại trong phòng ban " + phongBan.getTenPB() + ".");
             return true;
         }
         return false;
@@ -686,9 +835,6 @@ public class Menu {
         if (!email.contains("@")) {
             throw new IllegalArgumentException("Email phải chứa ký tự '@'.");
         }
-//        if (email.length() < 10) {
-//            throw new IllegalArgumentException("Email phải có ít nhất 10 ký tự.");
-//        }
     }
 
     private static void validateDiaChi(String diachi) {
@@ -697,22 +843,10 @@ public class Menu {
         }
 
 //        // Kiểm tra có chữ và số
-//        if (!diachi.matches(".*[a-zA-Z].*") || !diachi.matches(".*\\d.*")) {
-//            throw new IllegalArgumentException("Địa chỉ phải chứa cả chữ và số.");
-//        }
-//
-//        // Kiểm tra số chữ số trong địa chỉ
-//        int countDigits = 0;
-//        for (char c : diachi.toCharArray()) {
-//            if (Character.isDigit(c)) {
-//                countDigits++;
-//            }
-//        }
-//
-//        // Kiểm tra số lượng chữ số có từ 3 đến 5
-//        if (countDigits < 3 || countDigits > 5) {
-//            throw new IllegalArgumentException("Địa chỉ phải có ít nhất 3 chữ số và tối đa 5 chữ số.");
-//        }
+        if (!diachi.matches(".*[a-zA-Z].*") || !diachi.matches(".*\\d.*")) {
+            throw new IllegalArgumentException("Địa chỉ phải chứa cả chữ và số.");
+        }
+
     }
 
     private static void validateNgaySinh(String ngaysinh) {
@@ -748,27 +882,6 @@ public class Menu {
         }
     }
 
-    private static void validateTenPB(String TenPB) {
-        if (TenPB.isEmpty()) {
-            throw new IllegalArgumentException("Tên phòng ban không được để trống.");
-        }
-        if (TenPB.length() < 3) {
-            throw new IllegalArgumentException("Tên phòng ban phải chứa ít nhất 3 ký tự.");
-        }
-    }
-
-    private static void validateMAPB(String MAPB) {
-        if (MAPB.isEmpty()) {
-            throw new IllegalArgumentException("Mã phòng ban không được để trống.");
-        }
-        if (MAPB.length() < 2 || MAPB.length() > 4) {
-            throw new IllegalArgumentException("Mã phòng ban phải có độ dài từ 2 đến 5 ký tự.");
-        }
-        if (!MAPB.matches("[a-zA-Z0-9]+")) {
-            throw new IllegalArgumentException("Mã phòng ban chỉ được chứa chữ cái và số.");
-        }
-    }
-
     private static boolean validatePhuCap(double phuCap) {
         if (phuCap < 0) {
             System.out.println("Phụ cấp phải là một số dương. Vui lòng nhập lại.");
@@ -799,10 +912,4 @@ public class Menu {
         }
     }
 
-    public static String chuyenThanhInHoa(String str) {
-        if (str == null) {
-            return null; // Trả về null nếu chuỗi đầu vào là null
-        }
-        return str.toUpperCase(); // Sử dụng phương thức toUpperCase() để chuyển đổi
-    }
 }

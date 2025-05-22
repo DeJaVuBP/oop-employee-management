@@ -98,14 +98,10 @@ public abstract class NhanVien implements Ithongtin {
     // Phương thức trừu tượng để lấy kiểu nhân viên
     public abstract String getLoaiNhanVien();
 
+    
     @Override
     public String toString() {
         return "Mã NV: " + MSNV + ", Họ tên: " + ten + ", Vị Trí: " + getLoaiNhanVien();
     }
-
-
- 
-
-   
-        
+    public abstract String hienthichitiet();
 }

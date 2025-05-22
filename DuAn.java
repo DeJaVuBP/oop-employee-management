@@ -47,7 +47,7 @@ public class DuAn implements Ithongtin {
         this.dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     }
 
-public void nhapMaDA() {
+    public void nhapMaDA() {
         System.out.print("Nhập mã dự án: ");
         maDA = scanner.nextLine();
     }
@@ -124,9 +124,15 @@ public void nhapMaDA() {
     }
 
     public boolean kiemTraNhanVien(String msnv) {
-        return danhSachNhanVien.contains(msnv);
+    for (NhanVien nv : danhSachNhanVien) {
+        if (nv.getMSNV().equals(msnv)) {
+            return true; // Tìm thấy nhân viên có mã số trùng khớp
+        }
     }
-    
+    return false; // Không tìm thấy nhân viên
+}
+
+
     // Thêm nhân viên vào phòng ban
     public void themNhanVien(NhanVien nv) {
         if (nv != null) {
@@ -137,23 +143,34 @@ public void nhapMaDA() {
     }
 
     // Xóa nhân viên khỏi phòng ban
-    public void xoaNhanVien(NhanVien nv) {
-        if (danhSachNhanVien.remove(nv)) {
-            System.out.println("Đã xóa nhân viên: " + nv.getTen());
-        } else {
-            System.out.println("Nhân viên không tồn tại trong danh sách.");
-        }
+    public boolean xoaNhanVien(NhanVien nhanVien) {
+        return danhSachNhanVien.remove(nhanVien);
     }
-    
+
     public void hienThiDanhSachNhanVien() {
-        System.out.println("Danh sách nhân viên trong phòng ban: " + tenDA);
+        System.out.println("Danh sách nhân viên trong dự án: " + tenDA);
         if (danhSachNhanVien.isEmpty()) {
-            System.out.println("Không có nhân viên nào trong phòng ban này.");
+            System.out.println("Không có nhân viên nào trong dự án này.");
         } else {
             for (NhanVien nv : danhSachNhanVien) {
                 System.out.println(nv);
             }
         }
     }
-}
 
+    public String getDanhSachNhanVienAsString() {
+        StringBuilder sb = new StringBuilder();
+        if (danhSachNhanVien.isEmpty()) {
+            sb.append("Không có nhân viên nào trong dự án này.\n");
+        } else {
+            sb.append(String.format("%-10s %-20s\n", "Mã NV", "Tên"));
+            sb.append("-------------------------------------------------------------\n");
+            for (NhanVien nv : danhSachNhanVien) {
+                sb.append(String.format("%-10s %-20s\n",
+                        nv.getMSNV(),
+                        nv.getTen()));
+            }
+        }
+        return sb.toString();
+    }
+}

@@ -1,7 +1,5 @@
 package QLY_NHANSU;
 
-import java.util.Scanner;
-
 public class PartTime extends NhanVien {
 
     private double luongtheogio;   // Lương theo giờ làm việc
@@ -38,5 +36,10 @@ public class PartTime extends NhanVien {
     public String getLoaiNhanVien() {
         return "PartTime";
     }
-
+    
+     public String hienthichitiet() {
+        return "Mã NV: " + MSNV + ", Họ tên: " + ten + ", Email: " + email + ", Địa chỉ: " + diachi + ", "+ ngaysinh + 
+               " ,Giới tính: " + gioitinh + ", SĐT: " + sdt + ", Vị Trí: " + getLoaiNhanVien() +","+ luongtheogio;
+    }  
+     
 }

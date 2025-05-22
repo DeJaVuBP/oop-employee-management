@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package QLY_NHANSU;
 
 import java.util.ArrayList;
@@ -17,7 +13,10 @@ public class PhongBan implements Ithongtin {
     private String tenPB;                  // Tên phòng ban
     private String maPB;                   // Mã phòng ban
     private List<NhanVien> danhSachNhanVien; // Danh sách nhân viên trong phòng ban
-    private Scanner scanner;
+    public Scanner scanner;
+
+    // Static: Số lượng phòng ban
+    private static int soLuongPhongBan = 0;
 
     // Constructor mặc định
     public PhongBan() {
@@ -25,6 +24,7 @@ public class PhongBan implements Ithongtin {
         this.maPB = "";
         this.danhSachNhanVien = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        soLuongPhongBan++;
     }
 
     // Constructor không có danh sách nhân viên
@@ -33,6 +33,7 @@ public class PhongBan implements Ithongtin {
         this.maPB = maPB;
         this.danhSachNhanVien = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        soLuongPhongBan++;
     }
 
     // Constructor đầy đủ
@@ -41,6 +42,7 @@ public class PhongBan implements Ithongtin {
         this.maPB = maPB;
         this.danhSachNhanVien = danhSachNhanVien != null ? danhSachNhanVien : new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        soLuongPhongBan++;
     }
 
     // Getters và Setters
@@ -68,6 +70,24 @@ public class PhongBan implements Ithongtin {
         this.danhSachNhanVien = danhSachNhanVien != null ? danhSachNhanVien : new ArrayList<>();
     }
 
+    // Getter cho số lượng phòng ban
+    public static int getSoLuongPhongBan() {
+        return soLuongPhongBan;
+    }
+
+
+    // Hiển thị thông tin của phòng ban
+    @Override
+    public String toString() {
+        return "Mã: " + maPB + ", Tên: " + tenPB + ", Số lượng nhân viên: " + danhSachNhanVien.size();
+    }
+
+    // Hiển thị thông tin chi tiết của phòng ban và danh sách nhân viên
+    @Override
+    public void hienThiThongTin() {
+        System.out.println(this.toString());
+    }
+
     // Thêm nhân viên vào phòng ban
     public void themNhanVien(NhanVien nv) {
         if (nv != null) {
@@ -78,33 +98,17 @@ public class PhongBan implements Ithongtin {
     }
 
     // Xóa nhân viên khỏi phòng ban
-    public void xoaNhanVien(NhanVien nv) {
-        if (danhSachNhanVien.remove(nv)) {
-            System.out.println("Đã xóa nhân viên: " + nv.getTen());
-        } else {
-            System.out.println("Nhân viên không tồn tại trong danh sách.");
-        }
-    }
-//    // Tìm kiếm nhân viên theo mã nhân viên
-//    public NhanVien timNhanVien(String maNV) {
-//        for (NhanVien nv : danhSachNhanVien) {
-//            if (nv.getMSNV().equalsIgnoreCase(maNV)) {
-//                return nv;
-//            }
-//        }
-//        System.out.println("Không tìm thấy nhân viên với mã: " + maNV);
-//        return null;
-//    }
-    // Hiển thị thông tin của phòng ban
-    @Override
-    public String toString() {
-        return "Phòng Ban [Mã: " + maPB + ", Tên: " + tenPB + ", Số lượng nhân viên: " + danhSachNhanVien.size() + "]";
+    public boolean xoaNhanVien(NhanVien nhanVien) {
+        return danhSachNhanVien.remove(nhanVien);
     }
 
-    // Hiển thị thông tin chi tiết của phòng ban và danh sách nhân viên
-    @Override
-    public void hienThiThongTin() {
-        System.out.println(this.toString());
+    public boolean kiemTraNhanVien(String msnv) {
+        for (NhanVien nv : danhSachNhanVien) {
+            if (nv.getMSNV().equals(msnv)) {
+                return true; // Tìm thấy nhân viên có mã số trùng khớp
+            }
+        }
+        return false; // Không tìm thấy nhân viên
     }
 
     // Hiển thị danh sách nhân viên trong phòng ban
@@ -119,31 +123,19 @@ public class PhongBan implements Ithongtin {
         }
     }
 
-//    private static void validateTenPB(String tenPB) {
-//        // Kiểm tra nếu tên phòng ban trống
-//        if (tenPB.isEmpty()) {
-//            throw new IllegalArgumentException("Tên phòng ban không được để trống.");
-//        }
-//        // Kiểm tra nếu tên phòng ban có ít hơn 3 ký tự
-//        if (tenPB.length() < 3) {
-//            throw new IllegalArgumentException("Tên phòng ban phải chứa ít nhất 3 ký tự.");
-//        }
-//        
-//    }
-//
-//    private static void validateMAPB(String maPB) {
-//        if (maPB.isEmpty()) {
-//            throw new IllegalArgumentException("Mã phòng ban không được để trống.");
-//        }
-//        if (maPB.length() < 2 || maPB.length() > 5) {
-//            throw new IllegalArgumentException("Mã phòng ban phải có độ dài từ 2 đến 5 ký tự.");
-//        }
-//        if (!maPB.matches("[a-zA-Z0-9]+")) {
-//            throw new IllegalArgumentException("Mã phòng ban chỉ được chứa chữ cái và số.");
-//        }
-//        // Kiểm tra nếu tên phòng ban không bắt đầu bằng "PB"
-//        if (!maPB.startsWith("PB")) {
-//            throw new IllegalArgumentException("Mã phòng ban phải bắt đầu bằng 'PB'.");
-//        }
-//    }
+    public String getDanhSachNhanVienAsString() {
+        StringBuilder sb = new StringBuilder();
+        if (danhSachNhanVien.isEmpty()) {
+            sb.append("Không có nhân viên nào trong phòng ban này.\n");
+        } else {
+            sb.append(String.format("%-10s %-20s\n", "Mã NV", "Tên"));
+            sb.append("-------------------------------------------------------------\n");
+            for (NhanVien nv : danhSachNhanVien) {
+                sb.append(String.format("%-10s %-20s\n",
+                        nv.getMSNV(),
+                        nv.getTen()));
+            }
+        }
+        return sb.toString();
+    }
 }

@@ -28,7 +28,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
 
     }
 
-    // Thêm nhân viên
+   ///////////// Thêm nhân viên ///////////////
     @Override
     public void them(NhanVien nv) {
         for (NhanVien existingNV : danhSachNhanVien) {
@@ -42,7 +42,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         System.out.println("Thêm nhân viên thành công!");
     }
 
-    // Xóa nhân viên theo mã số nhân viên
+    ////////////// Xóa nhân viên theo mã số nhân viên ////////////
     @Override
     public void xoa(String ma) {
         NhanVien nvCanXoa = null;
@@ -60,7 +60,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         }
     }
 
-    // Sửa thông tin nhân viên theo mã số nhân viên
+    /////////////// Sửa thông tin nhân viên theo mã số nhân viên //////////////
     public void sua(String MSNV) {
         for (NhanVien nv : danhSachNhanVien) {
             if (nv.getMSNV().equals(MSNV)) {
@@ -81,82 +81,86 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         System.out.println("Không tìm thấy nhân viên với mã số: " + MSNV);
     }
 
+    ////////////////// SỬA THÔNG TIN TRƯỞNG PHÒNG ////////////////// 
+    
     private void suaTruongPhong(TruongPhong truongPhong) {
         System.out.println("Chỉnh sửa thông tin Trưởng Phòng:");
 
-        System.out.println("3. MSNV");
-        System.out.println("4. Tên");
-        System.out.println("5. Email");
-        System.out.println("6. Địa chỉ");
-        System.out.println("7. Ngày Sinh");
-        System.out.println("8. Giới tính");
-        System.out.println("9. Số điện thoại");
-        System.out.println("1. Lương cơ bản");
-        System.out.println("2. Phụ cấp");
-        System.out.println("2. Số năm kinh nghiệm");
+        System.out.println("1. MSNV");
+        System.out.println("2. Tên");
+        System.out.println("3. Email");
+        System.out.println("4. Địa chỉ");
+        System.out.println("5. Ngày Sinh");
+        System.out.println("6. Giới tính");
+        System.out.println("7. Số điện thoại");
+        System.out.println("8. Lương cơ bản");
+        System.out.println("9. Phụ cấp");
+        System.out.println("10. Số năm kinh nghiệm");
         System.out.print("Lựa chọn của bạn: ");
         int tpChoice = scanner.nextInt();
         scanner.nextLine();
 
         switch (tpChoice) {
             case 1:
-
-            case 2:
-                System.out.print("Nhập số năm kinh nghiệm: ");
-                int newKinhNghiem = scanner.nextInt();
-                truongPhong.setSoNamKinhNghiem(newKinhNghiem);
-                validateSoNamKinhNghiem(newKinhNghiem);
-                System.out.println("Đã cập nhật số năm kinh nghiệm.");
-                break;
-            case 3:
-                System.out.print("Nhập mã số nhân viên mới: ");
+            	System.out.print("Nhập mã số nhân viên mới: ");
                 String newMSNV = scanner.nextLine().trim().toUpperCase();
                 ;
                 validateMSNV(newMSNV);
                 truongPhong.setMSNV(newMSNV);
                 System.out.println("Đã cập nhật mã số nhân viên.");
                 break;
-            case 4:
+            case 2:
                 System.out.print("Nhập tên mới: ");
                 String newTen = scanner.nextLine().trim().toUpperCase();
                 validateTen(newTen);
                 truongPhong.setTen(newTen);
                 System.out.println("Đã cập nhật tên.");
                 break;
-            case 5:
+            case 3:
                 System.out.print("Nhập email mới: ");
                 String newEmail = scanner.nextLine();
                 validateEmail(newEmail);
                 truongPhong.setEmail(newEmail);
                 System.out.println("Đã cập nhật email.");
                 break;
-            case 6:
+            case 4:
                 System.out.print("Nhập địa chỉ mới: ");
                 String newDiaChi = scanner.nextLine();
                 validateDiaChi(newDiaChi);
                 truongPhong.setDiachi(newDiaChi);
                 System.out.println("Đã cập nhật địa chỉ.");
                 break;
-            case 7:
+            case 5:
                 System.out.print("Nhập ngày sinh mới: ");
                 String newNgaySinh = scanner.nextLine();
                 validateNgaySinh(newNgaySinh);
                 truongPhong.setNgaysinh(newNgaySinh);
                 System.out.println("Đã cập nhật ngày sinh.");
                 break;
-            case 8:
+            case 6:
                 System.out.print("Nhập giới tính mới: ");
                 String newGioiTinh = scanner.nextLine();
                 validateGioiTinh(newGioiTinh);
                 truongPhong.setGioitinh(newGioiTinh);
                 System.out.println("Đã cập nhật giới tính.");
                 break;
-            case 9:
+            case 7:
                 System.out.print("Nhập số điện thoại mới: ");
                 String newSDT = scanner.nextLine();
                 validateSdt(newSDT);
                 truongPhong.setSdt(newSDT);
                 System.out.println("Đã cập nhật số điện thoại.");
+                break;
+            case 8:
+            	//luong co ban
+            case 9:
+            	//phu cap
+            case 10:
+                System.out.print("Nhập số năm kinh nghiệm: ");
+                int newKinhNghiem = scanner.nextInt();
+                truongPhong.setSoNamKinhNghiem(newKinhNghiem);
+                validateSoNamKinhNghiem(newKinhNghiem);
+                System.out.println("Đã cập nhật số năm kinh nghiệm.");
                 break;
 
             default:
@@ -165,32 +169,81 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         }
     }
 
-    // Phương thức sửa thông tin cho Nhân viên Full-Time
+    //////// Phương thức sửa thông tin cho Nhân viên Full-Time ///////////
     private void suaNhanVienFullTime(FullTime fullTime) {
         System.out.println("Chỉnh sửa thông tin Nhân viên Full-Time:");
-        System.out.println("3. MSNV");
-        System.out.println("4. Tên");
-        System.out.println("5. Email");
-        System.out.println("6. Địa chỉ");
-        System.out.println("7. Ngày Sinh");
-        System.out.println("8. Giới tính");
-        System.out.println("9. Số điện thoại");
-        System.out.println("1. Lương cơ bản");
-        System.out.println("2. Phụ cấp");
+        System.out.println("1. MSNV");
+        System.out.println("2. Tên");
+        System.out.println("3. Email");
+        System.out.println("4. Địa chỉ");
+        System.out.println("5. Ngày Sinh");
+        System.out.println("6. Giới tính");
+        System.out.println("7. Số điện thoại");
+        System.out.println("8. Lương cơ bản");
+        System.out.println("9. Phụ cấp");
         System.out.print("Lựa chọn của bạn: ");
         int ftChoice = scanner.nextInt();
         scanner.nextLine();
         int newLuongCB = 0; // Khai báo ngoài phạm vi switch để có thể sử dụng ở case 2
 
         switch (ftChoice) {
-            case 1:
+	        case 1:
+	            System.out.print("Nhập mã số nhân viên mới: ");
+	            String newMSNV = scanner.nextLine().trim().toUpperCase();
+	            validateMSNV(newMSNV);
+	            fullTime.setMSNV(newMSNV);
+	            System.out.println("Đã cập nhật mã số nhân viên.");
+	            break;
+        	case 2:
+	            System.out.print("Nhập tên mới: ");
+	            String newTen = scanner.nextLine().trim().toUpperCase();
+	            validateTen(newTen);
+	            fullTime.setTen(newTen);
+	            System.out.println("Đã cập nhật tên.");
+	            break;        
+            case 3:
+                System.out.print("Nhập email mới: ");
+                String newEmail = scanner.nextLine();
+                validateEmail(newEmail);
+                fullTime.setEmail(newEmail);
+                System.out.println("Đã cập nhật email.");
+                break;
+            case 4:
+                System.out.print("Nhập địa chỉ mới: ");
+                String newDiaChi = scanner.nextLine();
+                validateDiaChi(newDiaChi);
+                fullTime.setDiachi(newDiaChi);
+                System.out.println("Đã cập nhật địa chỉ.");
+                break;
+            case 5:
+                System.out.print("Nhập ngày sinh mới: ");
+                String newNgaySinh = scanner.nextLine();
+                validateNgaySinh(newNgaySinh);
+                fullTime.setNgaysinh(newNgaySinh);
+                System.out.println("Đã cập nhật ngày sinh.");
+                break;
+            case 6:
+                System.out.print("Nhập giới tính mới: ");
+                String newGioiTinh = scanner.nextLine();
+                validateGioiTinh(newGioiTinh);
+                fullTime.setGioitinh(newGioiTinh);
+                System.out.println("Đã cập nhật giới tính.");
+                break;
+            case 7:
+                System.out.print("Nhập số điện thoại mới: ");
+                String newSDT = scanner.nextLine();
+                validateSdt(newSDT);
+                fullTime.setSdt(newSDT);
+                System.out.println("Đã cập nhật số điện thoại.");
+                break;
+            case 8:
                 System.out.print("Nhập lương cơ bản mới: ");
                 newLuongCB = scanner.nextInt();
                 validateLuongCoBan(newLuongCB);
                 fullTime.setLuongCoBan(newLuongCB);
                 System.out.println("Đã cập nhật lương cơ bản.");
                 break;
-            case 2:
+            case 9:
                 // Kiểm tra xem newLuongCB đã được nhập ở case 1 chưa
                 if (newLuongCB == 0) {
                     System.out.println("Vui lòng nhập lương cơ bản trước khi cập nhật phụ cấp.");
@@ -202,60 +255,13 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                     System.out.println("Đã cập nhật các khoản phụ cấp.");
                 }
                 break;
-            case 3:
-                System.out.print("Nhập mã số nhân viên mới: ");
-                String newMSNV = scanner.nextLine().trim().toUpperCase();
-                validateMSNV(newMSNV);
-                fullTime.setMSNV(newMSNV);
-                System.out.println("Đã cập nhật mã số nhân viên.");
-                break;
-            case 4:
-                System.out.print("Nhập tên mới: ");
-                String newTen = scanner.nextLine().trim().toUpperCase();
-                validateTen(newTen);
-                fullTime.setTen(newTen);
-                System.out.println("Đã cập nhật tên.");
-                break;
-            case 5:
-                System.out.print("Nhập email mới: ");
-                String newEmail = scanner.nextLine();
-                validateEmail(newEmail);
-                fullTime.setEmail(newEmail);
-                System.out.println("Đã cập nhật email.");
-                break;
-            case 6:
-                System.out.print("Nhập địa chỉ mới: ");
-                String newDiaChi = scanner.nextLine();
-                validateDiaChi(newDiaChi);
-                fullTime.setDiachi(newDiaChi);
-                System.out.println("Đã cập nhật địa chỉ.");
-                break;
-            case 7:
-                System.out.print("Nhập ngày sinh mới: ");
-                String newNgaySinh = scanner.nextLine();
-                validateNgaySinh(newNgaySinh);
-                fullTime.setNgaysinh(newNgaySinh);
-                System.out.println("Đã cập nhật ngày sinh.");
-                break;
-            case 8:
-                System.out.print("Nhập giới tính mới: ");
-                String newGioiTinh = scanner.nextLine();
-                validateGioiTinh(newGioiTinh);
-                fullTime.setGioitinh(newGioiTinh);
-                System.out.println("Đã cập nhật giới tính.");
-                break;
-            case 9:
-                System.out.print("Nhập số điện thoại mới: ");
-                String newSDT = scanner.nextLine();
-                validateSdt(newSDT);
-                fullTime.setSdt(newSDT);
-                System.out.println("Đã cập nhật số điện thoại.");
-                break;
 
         }
 
     }
 
+    ////////////////// SỬA NHÂN VIÊN PART TIME ////////////////
+    
     private void suaNhanVienPartTime(PartTime partTime) {
         System.out.println("Chỉnh sửa thông tin Nhân viên Part-Time:");
         System.out.println("1. MSNV");
@@ -272,7 +278,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
 
         switch (ptChoice) {
 
-            case 3:
+            case 1:
                 System.out.print("Nhập mã số nhân viên mới: ");
                 String newMSNV = scanner.nextLine().trim().toUpperCase();
                 try {
@@ -284,7 +290,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 4:
+            case 2:
                 System.out.print("Nhập tên mới: ");
                 String newTen = scanner.nextLine().trim().toUpperCase();
                 try {
@@ -296,7 +302,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 5:
+            case 3:
                 System.out.print("Nhập email mới: ");
                 String newEmail = scanner.nextLine();
                 try {
@@ -308,7 +314,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 6:
+            case 4:
                 System.out.print("Nhập địa chỉ mới: ");
                 String newDiachi = scanner.nextLine();
                 try {
@@ -320,7 +326,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 7:
+            case 5:
                 System.out.print("Nhập ngày sinh mới (dd/MM/yyyy): ");
                 String newNgaysinh = scanner.nextLine();
                 try {
@@ -332,7 +338,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 8:
+            case 6:
                 System.out.print("Nhập giới tính mới (Nam/Nữ): ");
                 String newGioitinh = scanner.nextLine();
                 try {
@@ -344,7 +350,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 9:
+            case 7:
                 System.out.print("Nhập số điện thoại mới: ");
                 String newSdt = scanner.nextLine();
                 try {
@@ -356,7 +362,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
                 }
                 break;
 
-            case 10:
+            case 8:
 
             default:
                 System.out.println("Lựa chọn không hợp lệ.");
@@ -364,7 +370,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         }
     }
 
-    // Tìm kiếm nhân viên theo mã số nhân viên
+    ///////////// Tìm kiếm nhân viên theo mã số nhân viên //////////////
     @Override
     public void timKiem(String ma) {
         for (NhanVien nv : danhSachNhanVien) {
@@ -376,7 +382,7 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         System.out.print("Không tìm thấy nhân viên mã:" + ma);
     }
 
-    // Hiển thị tất cả thông tin của nhân viên
+    /////////////// Hiển thị tất cả thông tin của nhân viên /////////////
     @Override
     public void hienThi() {
         if (danhSachNhanVien.isEmpty()) {
@@ -388,6 +394,8 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         }
     }
 
+    ///////////// TÌM NHÂN VIÊN /////////////
+    
     public NhanVien timNhanVien(String maNhanVien) {
         // Duyệt qua danh sách nhân viên để tìm nhân viên với mã số tương ứng
         for (NhanVien nv : this.danhSachNhanVien) {
@@ -403,6 +411,8 @@ public class DanhSachNhanVien implements Ichucnang<NhanVien> {
         return danhSachNhanVien;
     }
 
+    ////////////// VALIDATE //////////////
+    
     private static void validateMSNV(String MSNV) {
         if (MSNV.isEmpty()) {
             throw new IllegalArgumentException("Mã nhân viên không được để trống.");

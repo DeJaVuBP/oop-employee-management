@@ -42,8 +42,7 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
         return dsda;
     }
 
-    
-    
+//////////////////////THÊM/////////////////////////
     
     @Override
     public void them(DuAn da) {
@@ -116,7 +115,9 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
         System.out.println("Đã thêm dự án mới thành công.");
 
     }
-
+    
+//////////////////////SỬA/////////////////////////
+    
     public void suaDuAn(String maDA) {
         for (DuAn da : dsda) {
             if (da.getMaDA().equals(maDA)) {
@@ -181,6 +182,8 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
         System.out.println("Không tìm thấy dự án có mã: " + maDA);
     }
 
+//////////////////////SỬA TẤT CẢ THUỘC TÍNH/////////////////////////
+    
     private void suaTatCaThuocTinh(DuAn da) {
         // Nhập và validate mã dự án mới
         boolean maHopLe;
@@ -232,7 +235,8 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
         System.out.println("Đã cập nhật tất cả các thuộc tính của dự án.");
     }
 
-
+//////////////////////XÓA/////////////////////////
+    
     public void xoa(String maDA) {
         boolean removed = dsda.removeIf(da -> da.getMaDA().equals(maDA));
         if (removed) {
@@ -242,6 +246,8 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
         }
     }
 
+//////////////////////TÌM KIẾM/////////////////////////
+    
     public void timKiem(String maDA) {
         for (DuAn da : dsda) {
             if (da.getMaDA().equals(maDA)) {
@@ -256,12 +262,22 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
     public DuAn timKiemDuAn(String maDA) {
         for (DuAn da : dsda) {
             if (da.getMaDA().equals(maDA)) {
-                return da;  // Trả về phòng ban tìm thấy
+                return da;  
             }
         }
-        return null;  // Không tìm thấy phòng ban
+        return null;  
     }
 
+    public DuAn timDuAnCuaNhanVien(String maNV) {
+    for (DuAn da : dsda) {
+        if (da.kiemTraNhanVien(maNV)) {
+            return da; // Trả về phòng ban mà nhân viên đang thuộc
+        }
+    }
+    return null; // Không tìm thấy nhân viên trong bất kỳ phòng ban nào
+}
+//////////////////////THÊM NHÂN VIÊN VÀO D.A/////////////////////////
+    
 //    public void themNhanVienVaoDuAn(String maDA, NhanVien nv) {
 //         boolean found = false;
 
@@ -316,6 +332,9 @@ public class DanhSachDuAn implements Ichucnang<DuAn> {
         }
         System.out.println("Không tìm thấy dự án có mã: " + maDA);
     }
+    
+//////////////////////VALIDATE/////////////////////////
+    
     public boolean validateMaDA(String maDA) {
         return maDA.matches("^DA\\d{3}$");
     }

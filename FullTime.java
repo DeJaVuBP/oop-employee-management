@@ -47,5 +47,11 @@ public class FullTime extends NhanVien {
     public String getLoaiNhanVien() {
         return "FullTime";
     }
+    
+    @Override
+    public String hienthichitiet() {
+        return "Mã NV: " + MSNV + ", Họ tên: " + ten + ", Email: " + email + ", Địa chỉ: " + diachi + ", "+ ngaysinh + 
+               " ,Giới tính: " + gioitinh + ", SĐT: " + sdt + ", Vị Trí: " + getLoaiNhanVien()+"," + luongCoBan +","+ phuCap;
+    }    
 
 }
