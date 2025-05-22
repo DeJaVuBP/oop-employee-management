@@ -1,0 +1,13 @@
+PB001, KE TOAN, Số lượng nhân viên: 0
+Không có nhân viên nào trong phòng ban này.
+PB002, NHAN SU, Số lượng nhân viên: 0
+Không có nhân viên nào trong phòng ban này.
+PB003, KY THUAT, Số lượng nhân viên: 0
+Không có nhân viên nào trong phòng ban này.
+PB004, HANH CHINH, Số lượng nhân viên: 0
+Không có nhân viên nào trong phòng ban này.
+PB005, CHAM SOC KHACH HANG, Số lượng nhân viên: 0
+Không có nhân viên nào trong phòng ban này.
+
+
+

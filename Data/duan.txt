@@ -1,0 +1,10 @@
+DA001,BLOCK CHAIN AI,22/10/2024,22/10/2025,Không có nhân viên nào trong dự án này.
+
+DA002,MOBILE APP,19/10/2024,22/10/2025,Không có nhân viên nào trong dự án này.
+
+DA003,BIG DATA,03/10/2024,22/10/2025,Không có nhân viên nào trong dự án này.
+
+DA004,AI RESEARCH,10/10/2024,22/10/2025,Không có nhân viên nào trong dự án này.
+
+DA005,SOFTWARE TESTING,22/10/2025,22/10/2026,Không có nhân viên nào trong dự án này.
+

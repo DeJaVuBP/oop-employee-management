@@ -1,0 +1,3 @@
+NV001,Nguyen Thi Mai,nguyenmai@email.com,123 Đường ABC,01/01/1990,Nữ,0123456789,Fulltime,5000,100
+NV002,Tran Minh Tu,tranminhtu@email.com,456 Đường XYZ,02/02/1985,Nam,0987654321,Parttime,25
+NV003,Le Thi Lan,lelan@email.com,789 Đường PQR,03/03/1980,Nữ,0912345678,TruongPhong,6000,500,5
